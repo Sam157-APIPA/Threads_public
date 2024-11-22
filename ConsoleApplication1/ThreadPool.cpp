@@ -17,6 +17,7 @@ threadsPool::threadsPool()
 threadsPool::~threadsPool()
 {
     stop = true;
+    note.notify_all();
     for (int i = 0; i < cntTreads; ++i) 
     {
         if (threads[i].joinable())
@@ -39,20 +40,24 @@ void threadsPool::run()
             //printf("xd\n");
             //this_thread::sleep_for(std::chrono::seconds(1));
         std:unique_lock<std::mutex> g(m);
-            note.wait(g, [this]() {return !q.empty(); });
+            note.wait(g, [this]() {
+                return (!q.empty()||stop);
+                });
             //if (!q.empty()) {
                 //delete from queue
-
-                t = q.front();
+            if (stop)
+                break;
+            t = q.front();
                 //mutex;
-                q.pop();
-                g.unlock();
+            q.pop();
+            g.unlock();
                 //вызов функции
-                t();
+            t();
             //}
         }
         
     }  
+
 }
 
 void threadsPool::addToQueue(function<void()> f)
@@ -62,4 +67,8 @@ void threadsPool::addToQueue(function<void()> f)
     q.push(f);
     note.notify_one();
     //mutex;
+}
+
+size_t threadsPool::getCntThreads() {
+    return cntTreads;
 }

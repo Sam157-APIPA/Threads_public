@@ -23,4 +23,5 @@ public:
        
     void run();
     void addToQueue(function <void()>);
+    size_t getCntThreads();
 };
