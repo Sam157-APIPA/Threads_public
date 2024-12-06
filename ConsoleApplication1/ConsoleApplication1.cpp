@@ -61,7 +61,7 @@ int divide(int n) {
 		}
 		cout << endl;
 		pool.addToQueue(bind(sum4, mas, size, std::ref(res)));
-		this_thread::sleep_for(std::chrono::seconds(1));
+		this_thread::sleep_for(std::chrono::microseconds(10));
 		result += res;
 	}
 	return result;
