@@ -18,7 +18,6 @@ class threadsPool {
     std::mutex m;
     bool stop;
     condition_variable note;
-    void MyExeption(string);
 public:
     threadsPool();
     ~threadsPool();
