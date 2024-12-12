@@ -18,11 +18,20 @@ class threadsPool {
     std::mutex m;
     bool stop;
     condition_variable note;
+    void MyExeption(string);
 public:
     threadsPool();
     ~threadsPool();
-       
+    void MyExeption(const std::string& ex);
     void run();
     void addToQueue(function <void()>);
     size_t getCntThreads();
+};
+
+class ThreadPoolException : public std::exception {
+private:
+    std::string message;
+public:
+    ThreadPoolException(const std::string& msg) : message(msg) {}
+    const char* what() const noexcept override { return message.c_str(); }
 };

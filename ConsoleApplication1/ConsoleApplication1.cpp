@@ -36,9 +36,7 @@ void sum4(int* mas, int size, int& res) {
 			}
 		}
 	}
-	//cout << result << endl;
 	res = result;
-	//cout << res << endl;
 }
 
 int divide(int n) {
