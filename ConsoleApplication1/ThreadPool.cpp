@@ -8,6 +8,7 @@ threadsPool::threadsPool()
     try 
     {
         cntTreads = std::thread::hardware_concurrency();
+        //cntTreads = 0;
         if (cntTreads == 0)
             throw ThreadPoolException("0 threads are available");
     }
