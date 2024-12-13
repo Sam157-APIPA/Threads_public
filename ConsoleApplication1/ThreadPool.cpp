@@ -8,10 +8,12 @@ threadsPool::threadsPool()
     try 
     {
         cntTreads = std::thread::hardware_concurrency();
+        if (cntTreads == 0)
+            throw ThreadPoolException("0 threads are available");
     }
     catch (...) 
     {
-        throw ThreadPoolException("0 threads are available");
+        throw ThreadPoolException("Critical Error");
     }
         for (int i = 0; i < cntTreads; i++) {
             threads.emplace_back(&threadsPool::run, this);
